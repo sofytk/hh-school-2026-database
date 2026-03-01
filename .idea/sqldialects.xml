@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/1_create_database.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/2_generate_data.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/3_AVG_compensation_from_compensation_to_by_areaid.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/4_most_count_of_vacancies_and_resumes_months.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/5_more_than_five_responses_for_vacancy.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/6_create_indexs.sql" dialect="PostgreSQL" />
+  </component>
+  <component name="SqlResolveMappings">
+    <file url="file://$PROJECT_DIR$/1_create_database.sql" scope="{&quot;node&quot;:{  &quot;@negative&quot;:&quot;1&quot;,  &quot;group&quot;:{   &quot;@kind&quot;:&quot;root&quot;,   &quot;node&quot;:{    &quot;@negative&quot;:&quot;1&quot;   }  } }}" />
+    <file url="file://$PROJECT_DIR$/2_generate_data.sql" scope="{&quot;node&quot;:{  &quot;@negative&quot;:&quot;1&quot;,  &quot;group&quot;:{   &quot;@kind&quot;:&quot;root&quot;,   &quot;node&quot;:{    &quot;@negative&quot;:&quot;1&quot;   }  } }}" />
+  </component>
+</project>
