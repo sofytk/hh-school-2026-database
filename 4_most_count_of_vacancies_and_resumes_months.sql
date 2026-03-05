@@ -1,5 +1,5 @@
 SELECT
-    TO_CHAR(date_trunc('month', published_at), 'YYYY-MM') AS month,
+    TO_CHAR(date_trunc('month', created_at), 'YYYY-MM') AS month,
     COUNT(*) AS vacancies_count
 FROM vacancies
 GROUP BY month

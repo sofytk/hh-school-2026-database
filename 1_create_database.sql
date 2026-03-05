@@ -37,7 +37,7 @@ CREATE TABLE vacancies
     position_name            TEXT    NOT NULL,
     compensation_from        INTEGER,
     compensation_to          INTEGER,
-    area_id                   INTEGER,
+    area_id                  INTEGER,
     salary_currency          VARCHAR(50) DEFAULT 'Рубли'
         CHECK (salary_currency IN ('Рубли', 'Евро', 'Доллары')),
     payment_frequency        VARCHAR(50) DEFAULT 'два раза в месяц'
@@ -45,8 +45,9 @@ CREATE TABLE vacancies
     education                VARCHAR(50)
         CHECK (education IN ('Не требуется или не указано', 'Среднее профессиональное', 'Высшее')),
     experience_required      VARCHAR(50) CHECK ( experience_required IN
-                                                 ('Не требуется', 'От 1 года до 3 лет', 'От 3 до 6 лет',
-                                                  'От 3 до 6 лет')),
+                                                 ('Не имеет значения', 'Нет опыта', 'От 1 года до 3 лет',
+                                                  'От 3 до 6 лет',
+                                                  'Более 6 лет')),
     employment_type          VARCHAR(50) CHECK (employment_type IN (
                                                                     'Полная занятость',
                                                                     'Частичная занятость',
@@ -123,3 +124,15 @@ CREATE TABLE responses
     updated_at        TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
     UNIQUE (vacancy_id, resume_id)
 );
+
+
+ALTER TABLE vacancies
+    ADD COLUMN specializations_id INTEGER REFERENCES specializations (specializations_id),
+    ALTER COLUMN area_id SET NOT NULL,
+    ALTER COLUMN area_id SET DEFAULT 0, --допустим 0 значение по умолчанию
+    DROP COLUMN responses_count,
+    DROP COLUMN published_at;
+
+ALTER TABLE responses
+    DROP COLUMN published_at,
+    DROP COLUMN applicant_id;

@@ -51,12 +51,11 @@ FROM generate_series(1, 100000) gs;
 
 
 INSERT INTO resumes
-(applicant_id, title, desired_position, specialization_id,
+(title, desired_position, specialization_id,
  salary_min, description, skills, employment_type, work_schedule, created_at)
 SELECT
     a.applicants_id,
     'Резюме ' || a.applicants_id,
-    s.name,
     s.specializations_id,
     30000 + (random()*150000)::int,
     'Опыт работы и описание кандидата',
@@ -83,8 +82,7 @@ INSERT INTO vacancies
     employment_format_type,
     description,
     views_count,
-    responses_count,
-    published_at
+    created_at
 )
 SELECT
     e.employer_id,
@@ -93,7 +91,7 @@ SELECT
     150000 + (random()*200000)::int,
     (random() * 85 + 1)::int,
     (ARRAY['Не требуется или не указано','Среднее профессиональное','Высшее'])[1 + (random()*2)::int],
-    (ARRAY['Не требуется','От 1 года до 3 лет','От 3 до 6 лет'])[1 + (random()*2)::int],
+    (ARRAY['Не имеет значения', 'Нет опыта', 'От 1 года до 3 лет','От 3 до 6 лет', 'Более 6 лет'])[1 + (random()*2)::int],
     (ARRAY['Полная занятость','Частичная занятость','Подработка','Вахта'])[1 + (random()*3)::int],
     (ARRAY[
         'Трудовой договор',
@@ -105,7 +103,6 @@ SELECT
     (ARRAY['На месте работодателя','Удалённо','Гибрид','Разъездной'])[1 + (random()*3)::int],
     'Описание вакансии',
     (random()*1000)::int,
-    (random()*100)::int,
     TIMESTAMP '2025-01-01' + (random() * INTERVAL '1 year')
 FROM employers e
          JOIN specializations s ON random() < 0.05
@@ -114,14 +111,15 @@ LIMIT 10000;
 
 
 INSERT INTO responses
-(vacancy_id, resume_id, applicant_id, cover_letter, response_status, viewed_by_company)
+(vacancy_id, resume_id, cover_letter, response_status, viewed_by_company, created_at)
 SELECT DISTINCT
     v.vacancy_id,
     r.resume_id,
-    r.applicant_id,
     'Сопроводительное письмо',
     (ARRAY['отправлен','просмотрен','приглашение','отказ'])[1 + (random()*3)::int],
-    random() < 0.5
+    random() < 0.5,
+    v.created_at
+        + ( (1 + floor(random() * 30)) * INTERVAL '1 day' )
 FROM vacancies v
          JOIN resumes r ON random() < 0.15
 LIMIT 300000;
@@ -129,11 +127,7 @@ LIMIT 300000;
 COMMIT;
 
 
-UPDATE responses r
-SET published_at =
-        v.published_at
-            + ( (1 + floor(random() * 30)) * INTERVAL '1 day' )
-FROM vacancies v
-WHERE r.vacancy_id = v.vacancy_id;
+
+
 
 

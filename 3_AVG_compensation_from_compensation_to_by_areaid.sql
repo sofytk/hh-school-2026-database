@@ -4,5 +4,7 @@ SELECT
     ROUND(AVG(compensation_to), 2),
     ROUND(AVG((compensation_from + compensation_to) / 2.0), 2)
 FROM vacancies
+WHERE compensation_from IS NOT NULL
+  AND compensation_to IS NOT NULL
 GROUP BY area_id
 ORDER BY area_id;
